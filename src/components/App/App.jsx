@@ -8,21 +8,17 @@ import ContactList from '../ContactList/ContactList'
 
 function App() {
     const [contacts, setcontacts] = useState(initialContacts);
-
     const [filter, setFilter] = useState('');
-    
     const addContact = (newContact) => {
         setcontacts((prevContacts) => {
             return [...prevContacts, newContact]
         })
     }
-    
     const deleteContact = (contactId) => {
         setcontacts(prevContacts => {
             return prevContacts.filter(contact => contact.id !== contactId)
         })
     }
-
     const visibleContacts = contacts.filter(contact => 
         contact.name.toLowerCase().includes(filter.toLowerCase()))
     
