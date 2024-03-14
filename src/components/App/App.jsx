@@ -1,21 +1,27 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
-import initialContacts from '../contacts.json'
 import ContactForm from '../ContactForm/ContactForm'
 import SearchBox from '../SearchBox/SearchBox'
 import ContactList from '../ContactList/ContactList'
 
 
 function App() {
-    const [contacts, setcontacts] = useState(initialContacts);
+    const [contacts, setContacts] = useState(
+        () => JSON.parse(localStorage.getItem('saved-contacts')) ?? []
+      );
     const [filter, setFilter] = useState('');
     const addContact = (newContact) => {
-        setcontacts((prevContacts) => {
+        setContacts((prevContacts) => {
             return [...prevContacts, newContact]
         })
     }
+
+    useEffect(() => {
+        localStorage.setItem('saved-contacts', JSON.stringify(contacts));
+      }, [contacts]);
+
     const deleteContact = (contactId) => {
-        setcontacts(prevContacts => {
+        setContacts(prevContacts => {
             return prevContacts.filter(contact => contact.id !== contactId)
         })
     }
